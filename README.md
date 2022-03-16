@@ -5,9 +5,11 @@ A Full-Stack SPA School CMS Build With Reactjs - PHP - Tailwind  / Dark Theme - 
 <img width="800" alt="Img" src="./dark.png"/>
 <br />
 <br />
-<img width="800" alt="Img" src="./light.png"/>
-<br />
-<br />
+
+https://user-images.githubusercontent.com/92695669/158592972-de8e82a6-ba3f-4c7e-95f8-4da452b5e144.mp4
+
+
+
 
 
 - [x] React 17.0.2
