@@ -175,7 +175,7 @@ const Setting = () => {
         }
     }
     const onSubmit = () => {
-        const formData = { image: selectedImage }
+        const formData = { id:id , image: selectedImage }
         let endpoint = BaseURL + "cms-backend/avatars.php";
         axios.post(endpoint, formData, {
         }).then((resp) => {
