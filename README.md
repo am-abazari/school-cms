@@ -19,7 +19,7 @@ A Full-Stack SPA & PWA School CMS Build With Reactjs - PHP - Tailwind  / Dark Th
 - [x] daisyUI
 - [x] Restful API
 - [x] MySQL
-- [ ] PWA
+- [x] PWA
 - [x] Dark/Light Theme Support
 - [x] Latest Webpack , Babel 7 and Webpack Dev Server ,with Scope Hoisting enabled
 - [x] ES6 linting with continuous linting on file change
