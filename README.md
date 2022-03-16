@@ -1,15 +1,16 @@
-# School CMS / Reactjs - PHP - Tailwind
+# School CMS (PWA) / Reactjs - PHP - Tailwind
 
-A Full-Stack SPA School CMS Build With Reactjs - PHP - Tailwind  / Dark Theme - Light Theme
+A Full-Stack SPA & PWA School CMS Build With Reactjs - PHP - Tailwind  / Dark Theme - Light Theme
 
 <img width="800" alt="Img" src="./dark.png"/>
 <br />
 <br />
 
-https://user-images.githubusercontent.com/92695669/158592972-de8e82a6-ba3f-4c7e-95f8-4da452b5e144.mp4
+<video controls width="900" src="https://user-images.githubusercontent.com/92695669/158592972-de8e82a6-ba3f-4c7e-95f8-4da452b5e144.mp4
+" />
 
-
-
+<br />
+<br />
 
 
 - [x] React 17.0.2
@@ -18,6 +19,7 @@ https://user-images.githubusercontent.com/92695669/158592972-de8e82a6-ba3f-4c7e-
 - [x] daisyUI
 - [x] Restful API
 - [x] MySQL
+- [ ] PWA
 - [x] Dark/Light Theme Support
 - [x] Latest Webpack , Babel 7 and Webpack Dev Server ,with Scope Hoisting enabled
 - [x] ES6 linting with continuous linting on file change
@@ -30,14 +32,18 @@ https://user-images.githubusercontent.com/92695669/158592972-de8e82a6-ba3f-4c7e-
 Make sure you have the latest Stable or LTS version of Node.js installed.
 
 1. `git clone https://github.com/am-abazari/school-cms.git`
-2. Run `npm install` or `yarn install`
-3. Start the dev server using `npm start`
-4. Put `Backend` Directory in Xampp/Wampp or ...
-5. Create `my-app` Database
-6. Import `sql.sql` file in `my-app` Database 
-7. Change `BaseURL` to Where Directory/URL Backend Placed
-8. Customize `Connection.php` to Your Own 
-9. Open [http://localhost:3000/](http://localhost:3000/)
+2. cd `school-cms`
+3. cd `FrontEnd`
+4. Run `npm install` or `yarn install`
+5. Start the dev server using `npm start`
+6. Create `my-app` Database
+7. Import `sql2.sql` or `sql.sql` file in `my-app` Database 
+8. Put `Backend/cms-backend` Directory in Xampp/Wampp or ...
+9. Change `BaseURL` to Where Directory/URL Backend Placed
+10. Customize `Connection.php` to Your Own 
+11. For Avatar Change $DIR `Backend\cms-backend\avatars.php` To Directory  `FrontEnd\src\Images\avatars`
+12. Open [http://localhost:3000/](http://localhost:3000/)
+13. Enjoy
 
 
 ## Available Commands
