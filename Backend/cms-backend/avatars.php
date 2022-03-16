@@ -5,7 +5,7 @@ global $tbl_users, $connect;
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-$BaseURL = "C:\Users\amirh\OneDrive\Desktop\my-app\src\Images\avatars";
+$BaseURL = "";
 $DIR = $BaseURL . "/";
 $httpPost = file_get_contents("php://input");
 $req = json_decode($httpPost);
@@ -20,9 +20,10 @@ $file = $DIR . $setDIR;
 
 
 if (file_put_contents($file, $base64Img)) {
-    $sql = "UPDATE `$tbl_users` SET `avatar`=? WHERE `id` =9";
+    $sql = "UPDATE `$tbl_users` SET `avatar`=? WHERE `id` =?";
     $result = $connect->prepare($sql);
     $result->bindValue(1, ($setDIR));
+    $result->bindValue(2, ($req->id));
     if ($result->execute()) {
         echo json_encode(["200",$setDIR]);
     } else {
