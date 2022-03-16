@@ -1,0 +1,148 @@
+@import url(./Fonts/shabnam/font-face.css);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.active-tab {
+    padding: 10px 20px 10px 15px;
+    background-color: #615AC7;
+    border-radius: 9px;
+    box-shadow: #615AC7 2px 2px 8px;
+    color: #EFEEFC;
+}
+
+.inactive-tab {
+    padding: 10px 20px 10px 15px;
+    background-color: transparent;
+    border-radius: 9px;
+    box-shadow: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+    border-radius: 0;
+    width: 3px;
+}
+::-webkit-scrollbar-corner {
+    background: rgba(0,0,0,0);
+  }
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    background: #635CCC;
+}
+
+:root {
+    --toastify-font-family: shabnam !important;
+    --toastify-direction: rtl;
+}
+
+.width-set {
+    width: calc(100% - 288px);
+}
+
+@media (max-width: 1535px) {
+    .width-set {
+        width: 100%;
+    }
+}
+
+::selection {
+    background-color: #635CCC;
+    color: #FFF;
+}
+
+.input-set::-webkit-outer-spin-button,
+.input-set::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-set[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+.border-set:last-child {
+    border: none !important;
+}
+
+.active-theme {
+    color: #6b7280 !important;
+    background-color: #1F2937 !important;
+}
+
+.inactive-theme {
+    color: #1F2937 !important;
+    background-color: #6b7280 !important;
+}
+
+.min-set {
+    min-width: 150px;
+}
+
+@media (max-width: 810.9px) {
+    .min-set {
+        min-width: unset;
+        margin-left: 30px;
+    }
+}
+
+.tbl-width {
+    width: 100%;
+}
+
+@media (max-width: 1280px) {
+    .tbl-width {
+        width: 1200px;
+    }
+}
+
+.sidebar {
+    transition: all .3s ease-in-out;
+    display: block;
+}
+
+.sidebar-active {
+    transform: translateX(0) !important;
+}
+
+.sidebar-inactive {
+    transform: translateX(300px) !important;
+}
+
+@media (max-width: 1536px) {
+    .sidebar {
+        transform: translateX(300px);
+    }
+}
+
+@media (min-width: 1536px) {
+    .sidebar {
+        transform: translateX(0) !important;
+    }
+}
+
+.parent-scroll {
+    overflow: scroll;
+}
+
+.child-scroll {
+    overflow-y: scroll !important;
+}
+
+.parent-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+@media (min-width: 400px) {
+    .query-hidden{
+        display: flex;
+    }
+}
+@media (max-width: 400px) {
+    .query-hidden{
+        display: none;
+    }
+}

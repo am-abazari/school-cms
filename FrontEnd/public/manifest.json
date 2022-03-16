@@ -1,0 +1,66 @@
+{
+    "short_name": "مدرسه آنلاین",
+    "name": "سامانه مدارس آنلاین",
+    "description": "سامانه مدارس آنلاین ، لذت یادگیری !",
+    "icons": [
+        {
+            "src": "./icons/logo-16.png",
+            "sizes": "16x16",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/logo-24.png",
+            "sizes": "24x24",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/logo-32.png",
+            "sizes": "32x32",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/logo-64.png",
+            "sizes": "64x64",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/logo-120.png",
+            "sizes": "120x120",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/logo-144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/logo-152.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/logo-167.png",
+            "sizes": "167x167",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/logo-180.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/logo-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/logo-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "start_url": ".",
+    "display": "standalone",
+    "theme_color": "#283046",
+    "background_color": "#18202F"
+}
