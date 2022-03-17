@@ -6,8 +6,8 @@ A Full-Stack SPA & PWA School CMS Build With Reactjs - PHP - Tailwind  / Dark Th
 <br />
 <br />
 
-<video controls width="900" src="https://user-images.githubusercontent.com/92695669/158592972-de8e82a6-ba3f-4c7e-95f8-4da452b5e144.mp4
-" />
+https://user-images.githubusercontent.com/92695669/158592972-de8e82a6-ba3f-4c7e-95f8-4da452b5e144.mp4
+
 
 <br />
 <br />
