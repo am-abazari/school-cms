@@ -31,19 +31,20 @@ https://user-images.githubusercontent.com/92695669/158592972-de8e82a6-ba3f-4c7e-
 
 Make sure you have the latest Stable or LTS version of Node.js installed.
 
-1. `git clone https://github.com/am-abazari/school-cms.git`
-2. cd `school-cms`
-3. cd `FrontEnd`
-4. Run `npm install` or `yarn install`
-5. Start the dev server using `npm start`
-6. Create `my-app` Database
-7. Import `sql2.sql` or `sql.sql` file in `my-app` Database 
-8. Put `Backend/cms-backend` Directory in Xampp/Wampp or ...
-9. Change `BaseURL` to Where Directory/URL Backend Placed
-10. Customize `Connection.php` to Your Own 
-11. For Avatar Change $DIR `Backend\cms-backend\avatars.php` To Directory  `FrontEnd\src\Images\avatars`
-12. Open [http://localhost:3000/](http://localhost:3000/)
-13. Enjoy
+1. Download [Allow-Cors-Access-Control](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf/related) and Turn it On
+2. `git clone https://github.com/am-abazari/school-cms.git`
+3. cd `school-cms`
+4. cd `FrontEnd`
+5. Run `npm install` or `yarn install`
+6. Start the dev server using `npm start`
+7. Create `my-app` Database
+8. Import `sql2.sql` or `sql.sql` file in `my-app` Database 
+9. Put `Backend/cms-backend` Directory in Xampp/Wampp or ...
+10. Change `BaseURL` to Where Directory/URL Backend Placed
+11. Customize `Connection.php` to Your Own 
+12. For Avatar Change $DIR `Backend\cms-backend\avatars.php` To Directory  `FrontEnd\src\Images\avatars`
+13. Open [http://localhost:3000/](http://localhost:3000/)
+14. Enjoy
 
 
 ## Available Commands
