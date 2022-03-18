@@ -122,10 +122,6 @@ const Signup = () => {
                                 setisSignup(false);
                             }
                         })
-                        .catch(function () {
-                            Toastify_Error("خطایی هنگام عملیات رخ داده است !");
-                            setisSignup(false);
-                        })
                 } else {
                     Toastify_Error("نام کاربری نا معتبر است");
                     setUsername("");
