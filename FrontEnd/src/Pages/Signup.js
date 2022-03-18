@@ -122,6 +122,9 @@ const Signup = () => {
                                 setisSignup(false);
                             }
                         })
+                    .catch(function () {
+                            setisSignup(false);
+                        })
                 } else {
                     Toastify_Error("نام کاربری نا معتبر است");
                     setUsername("");
