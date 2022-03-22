@@ -122,7 +122,7 @@ const Signup = () => {
                                 setisSignup(false);
                             }
                         })
-                    .catch(function () {
+                        .catch(function (e) {
                             setisSignup(false);
                         })
                 } else {

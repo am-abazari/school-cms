@@ -20,6 +20,8 @@ import infToField from '../Functions/intToField';
 import intToGrade from '../Functions/intToGrade';
 import fieldToInt from '../Functions/fieldToInt';
 import gradeToInt from '../Functions/gradeToInt';
+import Auth from '../Functions/Auth';
+import getExtraInfos from '../Functions/getExtraInfos';
 
 const Setting = () => {
 
@@ -43,96 +45,58 @@ const Setting = () => {
     const [mustStudy, setmustStudy] = useState();
     const [changeable, setChangeable] = useState(1);
 
-    // Data
-    const getData = () => {
-
-        if (cookies.get("id") && cookies.get("username") && cookies.get("password")) {
-            if (!avatar && !id && !name && !family && !time && !activity) {
-                axios.post(BaseURL + "cms-backend/checkAuth.php", {
-                    id: cookies.get("id"),
-                    username: cookies.get("username"),
-                    password: cookies.get("password"),
-                })
-                    .then(function (response) {
-                        if (response.data.resp == "200" && response.data.id == cookies.get("id")) {
-                            setid(response.data.id);
-                            setavatar(response.data.avatar);
-                            setName(response.data.name);
-                            setfamily(response.data.family);
-                            settime(response.data.time);
-                            setActivity(response.data.activity);
-                            setMobile(response.data.mobile);
-
-                        } else {
-                            Toastify_Error("لطفا وارد حساب کاربری خود شوید");
-                            deleteAllCookies();
-                            navigate("/Login")
-                        }
-                    })
-                    .catch(function () {
-                        Toastify_Error("هنگام ارسال اطلاعات مشکلی پیش رخ داده");
-                        deleteAllCookies();
-                        navigate("/Login")
-
-                    })
-            }
-
-            // user Extra Infos
-            if (!userClass && !field && !grade && !groups && !mustStudy) {
-                axios.post(BaseURL + "cms-backend/extraInfos.php", {
-                    user_id: cookies.get("id"),
-                })
-                    .then(function (response) {
-
-                        if (response.data.resp == "200") {
-                            setChangeable(response.data.changeable);
-                            // Must Study
-                            setmustStudy(response.data.must_study);
-                            // "Grade"
-                            setgrade(intToGrade(response.data.grade));
-                            // Class
-                            if (response.data.class != "0") {
-                                setUserClass(response.data.class);
-                            } else {
-                                setUserClass("نامعتبر");
-                            }
-                            // Groups
-                            if (response.data.groups != "0") {
-                                setgroups(response.data.groups);
-                            } else {
-                                setgroups("نامعتبر");
-                            }
-                            // field
-                            setfield(infToField(response.data.field));
-                        } else {
-                            setgrade("نامعتبر");
-                            setUserClass("نامعتبر");
-                            setgroups("نامعتبر");
-                            setfield("نامعتبر");
-                        }
-                    })
-                    .catch(function () {
-                        setgrade("نامعتبر");
-                        setUserClass("نامعتبر");
-                        setgroups("نامعتبر");
-                        setfield("نامعتبر");
-                    })
-
-
-
-            }
-        } else {
-            Toastify_Error("لطفا وارد حساب کاربری خود شوید");
-            deleteAllCookies();
-            navigate("/Login")
-        }
-    }
-
-
     useEffect(() => {
-        getData();
         document.title = BaseName + "تنظیمات";
+        (async () => {
+            if (cookies.get("id") && cookies.get("username") && cookies.get("password")) {
+                const result = await Auth(cookies.get("id"), cookies.get("username"), cookies.get("password"))
+                if (result) {
+                    setid(result.id);
+                    setavatar(result.customAvatar);
+                    setName(result.name);
+                    setfamily(result.family);
+                    settime(result.time);
+                    setActivity(result.activity);
+                    setMobile(result.mobile)
 
+                } else {
+                    Toastify_Error("لطفا وارد حساب کاربری خود شوید");
+                    deleteAllCookies();
+                    navigate("/Login")
+                }
+                const result_extra = await getExtraInfos(cookies.get("id"));
+                if (result_extra) {
+                    // Must Study
+                    setmustStudy(result_extra.must_study);
+                    // "Grade"
+                    setgrade((result_extra.grade));
+                    // Class
+                    if (result_extra.class != "0") {
+                        setUserClass(result_extra.class);
+                    } else {
+                        setUserClass("نامعتبر");
+                    }
+                    // Groups
+                    if (result_extra.groups != "0") {
+                        setgroups(result_extra.groups);
+                    } else {
+                        setgroups("نامعتبر");
+                    }
+                    // field
+                    setfield((result_extra.field));
+
+                } else {
+                    setgrade("نامعتبر");
+                    setUserClass("نامعتبر");
+                    setgroups("نامعتبر");
+                    setfield("نامعتبر");
+                }
+            } else {
+                Toastify_Error("لطفا وارد حساب کاربری خود شوید");
+                deleteAllCookies();
+                navigate("/Login")
+            }
+        })()
     }, []);
 
     const setData = () => {
@@ -152,11 +116,11 @@ const Setting = () => {
                 if (response.data == "200") {
                     Toastify_Success("اطلاعات با موفقیت ذخیره شد")
                 } else {
-                    Toastify_Error("هنگام زخیره اطلاعات مشکلی رخ داد ")
+                    Toastify_Error("هنگام ذخیره اطلاعات مشکلی رخ داد ")
                 }
             })
             .catch(function () {
-                Toastify_Error("هنگام زخیره اطلاعات مشکلی رخ داد ")
+                Toastify_Error("هنگام ذخیره اطلاعات مشکلی رخ داد ")
 
             })
     }
@@ -175,7 +139,7 @@ const Setting = () => {
         }
     }
     const onSubmit = () => {
-        const formData = { id:id , image: selectedImage }
+        const formData = { id: id, image: selectedImage }
         let endpoint = BaseURL + "cms-backend/avatars.php";
         axios.post(endpoint, formData, {
         }).then((resp) => {

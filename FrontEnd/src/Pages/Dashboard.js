@@ -28,6 +28,8 @@ import gradeToInt from '../Functions/gradeToInt';
 import { gregorian_to_jalali } from '../Functions/jdf'
 import { giveToday } from '../Functions/giveToday';
 import { IsEnd, IsStart } from '../Functions/CompareTime';
+import Auth from '../Functions/Auth';
+import getExtraInfos from '../Functions/getExtraInfos';
 
 const Dashboard = () => {
 
@@ -56,104 +58,54 @@ const Dashboard = () => {
 
 
     async function getData() {
-        if (cookies.get("id") && cookies.get("username") && cookies.get("password")) {
-            if (!avatar && !id && !name && !family && !time && !activity) {
-                await axios.post(BaseURL + "cms-backend/checkAuth.php", {
-                    id: cookies.get("id"),
-                    username: cookies.get("username"),
-                    password: cookies.get("password"),
-                })
-                    .then(function (response) {
-                        if (response.data.resp == "200" && response.data.id == cookies.get("id")) {
-                            setid(response.data.id);
-                            setavatar(`../Images/avatars/${response.data.avatar}`);
-                            setName(response.data.name);
-                            setfamily(response.data.family);
-                            settime(response.data.time);
-                            setActivity(response.data.activity);
-
-
-                        } else {
-                            Toastify_Error("لطفا وارد حساب کاربری خود شوید");
-                            deleteAllCookies();
-                            navigate("/Login")
-                        }
-                    })
-                    .catch(function () {
-                        Toastify_Error("هنگام ارسال اطلاعات مشکلی پیش رخ داده");
-                        deleteAllCookies();
-                        navigate("/Login")
-
-                    })
-            }
-
-
-
-
-
-            // ----------Get Data On Mount------------
-            // User Counts
-            if (!userCount) {
-                await axios.get(BaseURL + "cms-backend/userCount.php")
-                    .then((response) => {
-                        setuserCount(response.data);
-                    })
-            }
-
-            // user Extra Infos
-            if (!userClass && !field && !grade && !groups && !mustStudy) {
-                await axios.post(BaseURL + "cms-backend/extraInfos.php", {
-                    user_id: cookies.get("id"),
-                })
-                    .then(function (response) {
-                        if (response.data.resp == "200") {
-                            // Must Study
-                            setmustStudy(response.data.must_study);
-
-                            // "Grade"
-                            setgrade(intToGrade(response.data.grade));
-
-                            // Class
-                            if (response.data.class != "0") {
-                                setUserClass(response.data.class);
-                            } else {
-                                setUserClass("نامعتبر");
-                            }
-
-                            // Groups
-                            if (response.data.groups != "0") {
-                                setgroups(response.data.groups);
-                            } else {
-                                setgroups("نامعتبر");
-                            }
-
-                            // field
-                            setfield(infToField(response.data.field));
-
-
-                        } else {
-                            setgrade("نامعتبر");
-                            setUserClass("نامعتبر");
-                            setgroups("نامعتبر");
-                            setfield("نامعتبر");
-                        }
-
-
-
-                    })
-                    .catch(function () {
-                        setgrade("نامعتبر");
+        (async () => {
+            if (cookies.get("id") && cookies.get("username") && cookies.get("password")) {
+                const result = await Auth(cookies.get("id"), cookies.get("username"), cookies.get("password"))
+                if (result) {
+                    setid(result.id);
+                    setavatar(`../Images/avatars/${result.avatar}`);
+                    setName(result.name);
+                    setfamily(result.family);
+                    settime(result.time);
+                    setActivity(result.activity);
+                } else {
+                    Toastify_Error("لطفا وارد حساب کاربری خود شوید");
+                    deleteAllCookies();
+                    navigate("/Login")
+                }
+                const result_extra = await getExtraInfos(cookies.get("id"));
+                if (result_extra) {
+                    // Must Study
+                    setmustStudy(result_extra.must_study);
+                    // "Grade"
+                    setgrade((result_extra.grade));
+                    // Class
+                    if (result_extra.class != "0") {
+                        setUserClass(result_extra.class);
+                    } else {
                         setUserClass("نامعتبر");
+                    }
+                    // Groups
+                    if (result_extra.groups != "0") {
+                        setgroups(result_extra.groups);
+                    } else {
                         setgroups("نامعتبر");
-                        setfield("نامعتبر");
-                    })
+                    }
+                    // field
+                    setfield((result_extra.field));
 
+                } else {
+                    setgrade("نامعتبر");
+                    setUserClass("نامعتبر");
+                    setgroups("نامعتبر");
+                    setfield("نامعتبر");
+                }
+            } else {
+                Toastify_Error("لطفا وارد حساب کاربری خود شوید");
+                deleteAllCookies();
+                navigate("/Login")
             }
-        } else {
-            Toastify_Error("لطفا وارد حساب کاربری خود شوید");
-            deleteAllCookies();
-            navigate("/Login")
-        }
+        })()
 
 
     }
@@ -426,7 +378,7 @@ const Dashboard = () => {
                                 }
                             </div>
                         </div>
-                        
+
                         <div className='w-full xl:w-1/3 h-105 font-Shabnam flex flex-wrap md:flex-nowrap xl:block  xl:mt-0 mt-9'>
                             <div className='w-full h-48 dark:bg-bg_dark-50 bg-bg_light-100  rounded-xl mb-9 md:ml-2 xl:ml-0' dir='rtl'>
                                 <h3 className='dark:text-gray-400 text-text_light-100 font-Shabnam_Thin px-5 pt-5 pb-2 absolute'>نتایج آزمون ها</h3>

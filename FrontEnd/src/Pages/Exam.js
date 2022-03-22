@@ -20,6 +20,8 @@ import intToGrade from '../Functions/intToGrade';
 import fieldToInt from '../Functions/fieldToInt';
 import gradeToInt from '../Functions/gradeToInt';
 import ExamItem from '../Components/ExamItem';
+import getExtraInfos from '../Functions/getExtraInfos';
+import Auth from '../Functions/Auth';
 
 const Exam = () => {
 
@@ -45,92 +47,57 @@ const Exam = () => {
 
 
     // Data
-    const getData = () => {
-        if (cookies.get("id") && cookies.get("username") && cookies.get("password")) {
-            if (!avatar && !id && !name && !family && !time && !activity) {
-                axios.post(BaseURL + "cms-backend/checkAuth.php", {
-                    id: cookies.get("id"),
-                    username: cookies.get("username"),
-                    password: cookies.get("password"),
-                })
-                    .then(function (response) {
-                        if (response.data.resp == "200" && response.data.id == cookies.get("id")) {
-                            setid(response.data.id);
-                            setavatar(`../Images/avatars/${response.data.avatar}`);
-                            setName(response.data.name);
-                            setfamily(response.data.family);
-                            settime(response.data.time);
-                            setActivity(response.data.activity);
-
-
-                        } else {
-                            Toastify_Error("لطفا وارد حساب کاربری خود شوید");
-                            deleteAllCookies();
-                            navigate("/Login")
-                        }
-                    })
-                    .catch(function () {
-                        Toastify_Error("هنگام ارسال اطلاعات مشکلی پیش رخ داده");
-                        deleteAllCookies();
-                        navigate("/Login")
-
-                    })
-            }
-
-            // user Extra Infos
-            if (!userClass && !field && !grade && !groups && !mustStudy) {
-                axios.post(BaseURL + "cms-backend/extraInfos.php", {
-                    user_id: cookies.get("id"),
-                })
-                    .then(function (response) {
-                        if (response.data.resp == "200") {
-                            // Must Study
-                            setmustStudy(response.data.must_study);
-                            // "Grade"
-                            setgrade(intToGrade(response.data.grade));
-                            // Class
-                            if (response.data.class != "0") {
-                                setUserClass(response.data.class);
-                            } else {
-                                setUserClass("نامعتبر");
-                            }
-                            // Groups
-                            if (response.data.groups != "0") {
-                                setgroups(response.data.groups);
-                            } else {
-                                setgroups("نامعتبر");
-                            }
-                            // field
-                            setfield(infToField(response.data.field));
-                        } else {
-                            setgrade("نامعتبر");
-                            setUserClass("نامعتبر");
-                            setgroups("نامعتبر");
-                            setfield("نامعتبر");
-                        }
-                    })
-                    .catch(function () {
-                        setgrade("نامعتبر");
-                        setUserClass("نامعتبر");
-                        setgroups("نامعتبر");
-                        setfield("نامعتبر");
-                    })
-
-
-
-            }
-        } else {
-            Toastify_Error("لطفا وارد حساب کاربری خود شوید");
-            deleteAllCookies();
-            navigate("/Login")
-        }
-    }
-    // Get Lessons Data
-
 
     useEffect(() => {
-        getData();
         document.title = BaseName + "آزمون ها";
+        (async () => {
+            if (cookies.get("id") && cookies.get("username") && cookies.get("password")) {
+                const result = await Auth(cookies.get("id"), cookies.get("username"), cookies.get("password"))
+                if (result) {
+                    setid(result.id);
+                    setavatar(`../Images/avatars/${result.avatar}`);
+                    setName(result.name);
+                    setfamily(result.family);
+                    settime(result.time);
+                    setActivity(result.activity);
+                } else {
+                    Toastify_Error("لطفا وارد حساب کاربری خود شوید");
+                    deleteAllCookies();
+                    navigate("/Login")
+                }
+                const result_extra = await getExtraInfos(cookies.get("id"));
+                if (result_extra) {
+                    // Must Study
+                    setmustStudy(result_extra.must_study);
+                    // "Grade"
+                    setgrade((result_extra.grade));
+                    // Class
+                    if (result_extra.class != "0") {
+                        setUserClass(result_extra.class);
+                    } else {
+                        setUserClass("نامعتبر");
+                    }
+                    // Groups
+                    if (result_extra.groups != "0") {
+                        setgroups(result_extra.groups);
+                    } else {
+                        setgroups("نامعتبر");
+                    }
+                    // field
+                    setfield((result_extra.field));
+
+                } else {
+                    setgrade("نامعتبر");
+                    setUserClass("نامعتبر");
+                    setgroups("نامعتبر");
+                    setfield("نامعتبر");
+                }
+            } else {
+                Toastify_Error("لطفا وارد حساب کاربری خود شوید");
+                deleteAllCookies();
+                navigate("/Login")
+            }
+        })()
     }, []);
 
 
@@ -158,11 +125,6 @@ const Exam = () => {
                 })
         }
     }, [userClass, field, grade]);
-
-    // useEffect(() => {
-    //     console.log(exams.length);
-    // }, [exams]);
-
 
     return (
         <>
