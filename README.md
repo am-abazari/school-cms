@@ -29,9 +29,7 @@ https://user-images.githubusercontent.com/92695669/158592972-de8e82a6-ba3f-4c7e-
 
 ## Starting the dev server
 
-Make sure you have the latest Stable or LTS version of Node.js installed.
-
-1. Download [Allow-Cors-Access-Control](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf/related) and Turn it On
+1. Make sure you have the latest Stable or LTS version of Node.js installed.
 2. `git clone https://github.com/am-abazari/school-cms.git`
 3. cd `school-cms`
 4. cd `FrontEnd`
